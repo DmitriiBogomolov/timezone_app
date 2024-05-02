@@ -1,122 +1,88 @@
 <template>
   <v-container class="fill-height">
-    <v-responsive class="align-centerfill-height mx-auto" max-width="900">
-      <v-img class="mb-4" height="300" src="@/assets/logo_v1.svg" />
+    <v-responsive
+      class="align-centerfill-height mx-auto"
+      width="100"
+      max-width="900"
+    >
+      <div class="d-flex justify-center align-center">
+        <img class="mx-1" height="60" src="@/assets/logo_v4.svg" />
 
-      <div class="text-center">
-        <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
-        <h1 class="text-h2 font-weight-bold">Timezone App</h1>
+        <h1 class="mx-1 text-h4 font-weight-bold">Timezone App</h1>
       </div>
+      <div class="py-2" />
 
-      <div class="py-4" />
-
-      <v-row>
-        <v-col cols="12">
-          <v-card
-            class="py-4"
-            color="surface-variant"
-            image="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
-            prepend-icon="mdi-rocket-launch-outline"
-            rounded="lg"
-            variant="outlined"
-          >
-            <template #image>
-              <v-img position="top right" />
-            </template>
-
-            <template #title>
-              <h2 class="text-h5 font-weight-bold">Get started</h2>
-            </template>
-
-            <template #subtitle>
-              <div class="text-subtitle-1">
-                Replace this page by removing
-                <v-kbd>{{ `<HelloWorld />` }}</v-kbd> in
-                <v-kbd>pages/index.vue</v-kbd>.
-              </div>
-            </template>
-
-            <v-overlay
-              opacity=".12"
-              scrim="primary"
-              contained
-              model-value
-              persistent
-            />
+      <v-stepper mobile :items="['', '', '', '']">
+        <template v-slot:item.1>
+          <v-card title="Select time" flat>
+            <v-text-field
+              v-model="time"
+              :active="modal2"
+              :focused="modal2"
+              prepend-icon="mdi-clock-time-four-outline"
+              readonly
+            >
+              <v-dialog v-model="modal2" activator="parent" width="auto">
+                <v-time-picker v-if="modal2" v-model="time"></v-time-picker>
+              </v-dialog>
+            </v-text-field>
           </v-card>
-        </v-col>
+        </template>
 
-        <v-col cols="6">
-          <v-card
-            append-icon="mdi-open-in-new"
-            class="py-4"
-            color="surface-variant"
-            href="https://vuetifyjs.com/"
-            prepend-icon="mdi-text-box-outline"
-            rel="noopener noreferrer"
-            rounded="lg"
-            subtitle="Learn about all things Vuetify in our documentation."
-            target="_blank"
-            title="Documentation"
-            variant="text"
-          >
-            <v-overlay
-              opacity=".06"
-              scrim="primary"
-              contained
-              model-value
-              persistent
-            />
+        <template v-slot:item.2>
+          <v-card title="Выбрать дату" flat>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            ultrices sollicitudin tincidunt. Maecenas nec efficitur purus, vitae
+            scelerisque tellus. Sed nec ullamcorper augue. Maecenas eleifend
+            magna ut sollicitudin finibus. Vestibulum luctus placerat convallis.
+            Proin urna sem, auctor quis volutpat et, vehicula a purus. Vivamus
+            dignissim varius dictum. Mauris massa odio, rutrum sed elementum
+            quis, congue et tortor. Vivamus id cursus quam. Cras a placerat
+            velit. Vestibulum sagittis commodo pharetra. Sed arcu nunc, ornare
+            non imperdiet et, pretium feugiat sapien. Vestibulum in ligula vitae
+            turpis ultrices lobortis. Donec congue velit pellentesque, imperdiet
+            lorem nec, mattis ex. Nulla in blandit velit. Vestibulum non odio
+            sed eros rutrum faucibus. Vestibulum tristique tellus eu elementum
+            cursus.
           </v-card>
-        </v-col>
+        </template>
 
-        <v-col cols="6">
-          <v-card
-            append-icon="mdi-open-in-new"
-            class="py-4"
-            color="surface-variant"
-            href="https://vuetifyjs.com/introduction/why-vuetify/#feature-guides"
-            prepend-icon="mdi-star-circle-outline"
-            rel="noopener noreferrer"
-            rounded="lg"
-            subtitle="Explore available framework Features."
-            target="_blank"
-            title="Features"
-            variant="text"
-          >
-            <v-overlay
-              opacity=".06"
-              scrim="primary"
-              contained
-              model-value
-              persistent
-            />
+        <template v-slot:item.3>
+          <v-card title="Выбрать время" flat>
+            <br />asfaf<br />asfaf<br />asfaf<br />asfaf
           </v-card>
-        </v-col>
+        </template>
 
-        <v-timeline align="start" side="end">
-          <v-timeline-item
-            dot-color="pink"
-            size="small"
-            v-for="index in 24"
-            :key="index"
-          >
-            <div class="d-flex">
-              <span class="me-4">{{ index }}</span>
-            </div>
-          </v-timeline-item>
-        </v-timeline>
-      </v-row>
+        <template v-slot:item.4>
+          <v-card title="Подтвердить выбор" flat>
+            <br />asfaf<br />asfaf<br />asfaf<br />asfaf
+          </v-card>
+        </template>
+      </v-stepper>
     </v-responsive>
   </v-container>
 </template>
 
-<script setup>
-const items = [
-  {
-    hours: Array.from(Array(24).keys()),
-    location: "UTC",
+
+<script>
+import { VTimePicker } from "vuetify/labs/VTimePicker";
+
+export default {
+  components: {
+    VTimePicker,
   },
-];
-const item = [];
+  data() {
+    return {
+      tick: 5,
+      time: "11:15",
+      timeStep: "10:10",
+      tickLabels: Array.from(Array(25).keys()),
+    };
+  },
+  methods: {
+    allowedHours: (v) => v % 2,
+    allowedMinutes: (v) => v >= 10 && v <= 50,
+    allowedStep: (m) => m % 10 === 0,
+  },
+};
 </script>
